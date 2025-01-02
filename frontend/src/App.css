@@ -1,0 +1,57 @@
+/* Reset global styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(135deg, #d4defe, #f6f0ff);
+  color: #333;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* Adjusted for scrolling */
+  padding: 20px;
+}
+
+/* Header styles */
+header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+header h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #4a4a8e;
+}
+
+header p {
+  font-size: 1.1rem;
+  color: #4a4a8e;
+}
+
+
+.logout-button {
+  background-color: #ff6b6b;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: #ff4b4b;
+}
+
+.header-title {
+  text-align: center;
+  margin: 20px 0;
+  color: #333; /* Use the same color as your header's h1 */
+  /* Add any other styles that match your header's h1 */
+}
