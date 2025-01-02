@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const db = require('../config/db');
 const auth = require('../middleware/auth');
-const sgMail = require('@sendgrid/mail');
 
 // Get all messages (protected)
 router.get('/', async (req, res) => {
@@ -66,26 +65,7 @@ router.post('/', async (req, res) => {
       [message]
     );
 
-    console.log("sg api key")
-    console.log(process.env.SENDGRID_API_KEY)
-
-    // Send notification email
-    /*sgMail.setApiKey(process.env.SENDGRID_API_KEY)
-const msg = {
-  to: 'saisrinivass.lakkakula@gmail.com', // Change to your recipient
-  from: 'em9947.saisrinivasl.me', // Change to your verified sender
-  subject: 'New Anonymous Message Received',
-  text: 'New Anonymous Message Received',
-  html: '<strong>and easy to do anywhere, even with Node.js</strong>',
-}
-sgMail
-  .send(msg)
-  .then(() => {
-    console.log('Email sent')
-  })
-  .catch((error) => {
-    console.error(error)
-  })*/
+    
     res.status(201).json(result.rows[0]);
   } catch (err) {
     console.error(err.message);
