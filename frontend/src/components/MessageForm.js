@@ -6,10 +6,12 @@ const MessageForm = () => {
   const [message, setMessage] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState(''); // To handle errors
+  const [loading, setLoading] = useState(false); // To track loading state
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(''); // Clear previous errors
+    setLoading(true); // Set loading to true when starting the request
 
     try {
       // API call to submit the message
@@ -21,6 +23,8 @@ const MessageForm = () => {
     } catch (err) {
       console.error(err);
       setError('Failed to submit your message. Please try again.');
+    } finally {
+      setLoading(false); // Set loading to false when request is complete
     }
   };
 
@@ -35,8 +39,8 @@ const MessageForm = () => {
             required
             className="message-input"
           />
-          <button type="submit" className="submit-button">
-            Submit
+          <button type="submit" className="submit-button" disabled={loading}>
+            {loading ? <div className="spinner"></div> : 'Submit'}
           </button>
           {error && <p className="error-message">{error}</p>}
         </form>
