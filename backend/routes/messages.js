@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const axios = require("axios");
 const db = require('../config/db');
 const auth = require('../middleware/auth');
 
@@ -65,8 +66,48 @@ router.post('/', async (req, res) => {
       [message]
     );
 
-    
-    res.status(201).json(result.rows[0]);
+      // Prepare email payload
+    const emailPayload = {
+      sender: process.env.EMAIL_FROM, // Sender email from .env
+      to: [process.env.EMAIL_TO], // Recipient email from .env
+      subject: "New Message Received", // Email subject
+      text_body: `A new message has been received: ${message}`, // Email body
+    };
+
+    // Attempt to send the email
+    try {
+      const response = await axios.post(
+        "https://api.smtp2go.com/v3/email/send",
+        emailPayload,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "accept": "application/json",
+            "X-Smtp2go-Api-Key": process.env.SMTP_API_KEY, // API key from .env
+          },
+        }
+      );
+
+      // Log email success or failure
+      if (response.data.data.succeeded > 0) {
+        console.log("Email sent successfully.");
+      } else {
+        console.error("Email send failed:", response.data);
+      }
+      
+
+    } catch (emailError) {
+      // Log email errors, but do not stop the process
+      console.error("Error sending email:", emailError.response?.data || emailError.message);
+    }
+
+
+    res.status(201).json({
+      success: true,
+      message: "Message saved and email sent successfully.",
+      messageId: result.rows[0].id,
+    });
+
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');
