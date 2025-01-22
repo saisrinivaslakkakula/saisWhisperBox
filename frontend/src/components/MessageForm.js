@@ -32,6 +32,9 @@ const MessageForm = () => {
     <div className="message-form-container">
       {!submitted ? (
         <form onSubmit={handleSubmit} className="message-form">
+          <p className="message-prompt">
+            Send me an anonymous message. I promise I'll read it 😉
+          </p>
           <textarea
             value={message}
             onChange={(e) => setMessage(e.target.value)}
